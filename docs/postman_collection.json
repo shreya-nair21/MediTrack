@@ -1,0 +1,282 @@
+{
+  "info": {
+    "name": "MediTrack REST API - Jajal Medical",
+    "_postman_id": "c1f7a4b2-0816-43f1-b92c-687f28ab8b01",
+    "description": "Complete REST API collection for the MediTrack Medical Case Management system using Laravel Sanctum Bearer token authentication.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000/api",
+      "type": "string"
+    },
+    {
+      "key": "auth_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "Login (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@jajalmedical.com\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": ["{{base_url}}"],
+              "path": ["login"]
+            },
+            "description": "Authenticate an Admin user and receive a Laravel Sanctum Bearer token."
+          }
+        },
+        {
+          "name": "Login (Viewer)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"viewer@jajalmedical.com\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": ["{{base_url}}"],
+              "path": ["login"]
+            },
+            "description": "Authenticate a Viewer (read-only) user."
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/logout",
+              "host": ["{{base_url}}"],
+              "path": ["logout"]
+            },
+            "description": "Revoke the currently active Sanctum access token."
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Medical Cases CRUD",
+      "item": [
+        {
+          "name": "List Cases (Paginated)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/cases?page=1&status=Approved&search=Cranial",
+              "host": ["{{base_url}}"],
+              "path": ["cases"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "status",
+                  "value": "Approved"
+                },
+                {
+                  "key": "search",
+                  "value": "Cranial"
+                }
+              ]
+            },
+            "description": "Retrieve paginated medical cases with optional status, priority, and search query filters."
+          }
+        },
+        {
+          "name": "Create Case (Admin / Engineer)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"case_number\": \"CASE-5001\",\n  \"patient_reference\": \"PT-9012-KR\",\n  \"surgeon_name\": \"Dr. Jennifer Wu\",\n  \"implant_type\": \"Custom PEEK Skull Implant\",\n  \"status\": \"Planning\",\n  \"priority\": \"High\",\n  \"surgery_date\": \"2026-11-15\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/cases",
+              "host": ["{{base_url}}"],
+              "path": ["cases"]
+            },
+            "description": "Create a new medical case. Requires Admin or Engineer role."
+          }
+        },
+        {
+          "name": "Get Case Details",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/cases/1",
+              "host": ["{{base_url}}"],
+              "path": ["cases", "1"]
+            },
+            "description": "Fetch a single case by its ID."
+          }
+        },
+        {
+          "name": "Update Case (Admin / Engineer)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"case_number\": \"CASE-0001\",\n  \"patient_reference\": \"PT-1000-E3\",\n  \"surgeon_name\": \"Dr. Elizabeth Hayes\",\n  \"implant_type\": \"Cranial Titanium Mesh 3D\",\n  \"status\": \"Approved\",\n  \"priority\": \"High\",\n  \"surgery_date\": \"2026-10-25\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/cases/1",
+              "host": ["{{base_url}}"],
+              "path": ["cases", "1"]
+            },
+            "description": "Update an existing medical case. Uniqueness rule ignores the case being updated."
+          }
+        },
+        {
+          "name": "Delete Case (Admin Only)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/cases/1",
+              "host": ["{{base_url}}"],
+              "path": ["cases", "1"]
+            },
+            "description": "Permanently delete a medical case. Strictly restricted to Admin users."
+          }
+        }
+      ]
+    }
+  ]
+}
