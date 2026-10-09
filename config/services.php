@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'nager_date' => [
+        'url' => env('NAGER_DATE_API_URL', 'https://date.nager.at/api/v3/PublicHolidays'),
+        'country' => env('NAGER_DATE_COUNTRY', 'US'),
+    ],
+
 ];
