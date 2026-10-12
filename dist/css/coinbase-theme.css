@@ -1,0 +1,558 @@
+/* ==========================================================================
+   MediTrack - Coinbase Design System Theme (per DESIGN.md specification)
+   ========================================================================== */
+
+:root {
+    /* Brand & Accent */
+    --color-primary: #0052ff;
+    --color-primary-active: #003ecc;
+    --color-primary-disabled: #a8b8cc;
+    --color-on-primary: #ffffff;
+    --color-accent-yellow: #f4b000;
+
+    /* Surfaces */
+    --color-canvas: #ffffff;
+    --color-surface-soft: #f7f7f7;
+    --color-surface-card: #ffffff;
+    --color-surface-strong: #eef0f3;
+    --color-surface-dark: #0a0b0d;
+    --color-surface-dark-elevated: #16181c;
+
+    /* Typography & Ink */
+    --color-ink: #0a0b0d;
+    --color-body: #5b616e;
+    --color-body-strong: #0a0b0d;
+    --color-muted: #7c828a;
+    --color-muted-soft: #a8acb3;
+    --color-on-dark: #ffffff;
+    --color-on-dark-soft: #a8acb3;
+
+    /* Hairlines & Borders */
+    --color-hairline: #dee1e6;
+    --color-hairline-soft: #eef0f3;
+
+    /* Semantic Indicators */
+    --color-semantic-up: #05b169;
+    --color-semantic-down: #cf202f;
+
+    /* Radii */
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-pill: 9999px;
+
+    /* Typography Stacks */
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+    /* Shadows */
+    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.04);
+    --shadow-hover: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--color-surface-soft);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-ink);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+}
+
+h3 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.mono {
+    font-family: var(--font-mono);
+    letter-spacing: -0.01em;
+}
+
+/* Layout Shell */
+.app-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 24px;
+    width: 100%;
+}
+
+/* Top Navigation Bar */
+.top-nav {
+    background-color: var(--color-canvas);
+    border-bottom: 1px solid var(--color-hairline);
+    height: 68px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.top-nav .nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--color-ink);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+}
+
+.brand-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-primary);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--color-body);
+    font-weight: 500;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: var(--radius-pill);
+    transition: all 0.15s ease;
+}
+
+.nav-link:hover {
+    color: var(--color-ink);
+    background-color: var(--color-surface-strong);
+}
+
+.nav-link.active {
+    color: var(--color-primary);
+    background-color: rgba(0, 82, 255, 0.08);
+    font-weight: 600;
+}
+
+.user-profile-pill {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-surface-soft);
+    border: 1px solid var(--color-hairline);
+}
+
+/* Cards & Containers (Coinbase 24px geometry) */
+.card {
+    background-color: var(--color-surface-card);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-xl);
+    padding: 32px;
+    box-shadow: var(--shadow-soft);
+    transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+.card-dark {
+    background-color: var(--color-surface-dark);
+    color: var(--color-on-dark);
+    border: 1px solid #23272e;
+    border-radius: var(--radius-xl);
+    padding: 32px;
+}
+
+/* Buttons (Signature Coinbase 100px Pill) */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: var(--radius-pill);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.15;
+    padding: 12px 24px;
+    height: 44px;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.15s ease;
+    font-family: var(--font-sans);
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-active);
+}
+
+.btn-secondary {
+    background-color: var(--color-surface-strong);
+    color: var(--color-ink);
+    border-color: var(--color-hairline);
+}
+
+.btn-secondary:hover {
+    background-color: #e2e5ea;
+}
+
+.btn-danger {
+    background-color: #feeceb;
+    color: var(--color-semantic-down);
+    border-color: #fad1d0;
+}
+
+.btn-danger:hover {
+    background-color: var(--color-semantic-down);
+    color: #ffffff;
+}
+
+.btn-sm {
+    height: 36px;
+    padding: 8px 16px;
+    font-size: 13px;
+}
+
+/* Form Controls (12px radius, hairline border) */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-ink);
+}
+
+.form-control {
+    width: 100%;
+    height: 48px;
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-hairline);
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-size: 15px;
+    font-family: var(--font-sans);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 82, 255, 0.12);
+}
+
+.form-control.is-invalid {
+    border-color: var(--color-semantic-down);
+}
+
+.error-message {
+    color: var(--color-semantic-down);
+    font-size: 13px;
+    margin-top: 6px;
+    display: block;
+}
+
+/* Search Input Pill */
+.search-pill-container {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+}
+
+.search-input-pill {
+    width: 100%;
+    height: 44px;
+    padding: 10px 20px 10px 42px;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-surface-strong);
+    border: 1px solid transparent;
+    color: var(--color-ink);
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.search-input-pill:focus {
+    outline: none;
+    background-color: var(--color-canvas);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 82, 255, 0.12);
+}
+
+.search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-muted);
+    pointer-events: none;
+}
+
+/* Pill Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    text-transform: capitalize;
+}
+
+.badge-role-admin {
+    background-color: rgba(0, 82, 255, 0.1);
+    color: var(--color-primary);
+    border: 1px solid rgba(0, 82, 255, 0.2);
+}
+
+.badge-role-viewer {
+    background-color: var(--color-surface-strong);
+    color: var(--color-body);
+    border: 1px solid var(--color-hairline);
+}
+
+.badge-role-engineer {
+    background-color: rgba(244, 176, 0, 0.15);
+    color: #9c6c00;
+    border: 1px solid rgba(244, 176, 0, 0.3);
+}
+
+/* Status Badges */
+.badge-status-draft {
+    background-color: #f1f3f5;
+    color: #495057;
+}
+
+.badge-status-planning {
+    background-color: #fff9db;
+    color: #b07e00;
+}
+
+.badge-status-in-review {
+    background-color: #e7f5ff;
+    color: #1971c2;
+}
+
+.badge-status-approved {
+    background-color: #ebfbee;
+    color: #2b8a3e;
+}
+
+.badge-status-completed {
+    background-color: #d3f9d8;
+    color: #087f5b;
+}
+
+.badge-status-cancelled {
+    background-color: #ffe3e3;
+    color: #c92a2a;
+}
+
+/* Priority Indicators */
+.priority-high {
+    color: var(--color-semantic-down);
+    font-weight: 600;
+}
+
+.priority-medium {
+    color: var(--color-accent-yellow);
+    font-weight: 600;
+}
+
+.priority-low {
+    color: var(--color-semantic-up);
+    font-weight: 600;
+}
+
+/* Metric KPI Cards (Dashboard) */
+.metric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.metric-card {
+    background-color: var(--color-surface-card);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-xl);
+    padding: 24px;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.metric-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-muted);
+    margin-bottom: 12px;
+}
+
+.metric-value {
+    font-family: var(--font-mono);
+    font-size: 38px;
+    font-weight: 500;
+    color: var(--color-ink);
+    line-height: 1.1;
+}
+
+/* Tables */
+.table-responsive {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: left;
+}
+
+.data-table th {
+    background-color: var(--color-surface-soft);
+    color: var(--color-muted);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--color-hairline);
+}
+
+.data-table td {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--color-hairline);
+    color: var(--color-ink);
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.data-table tr:hover td {
+    background-color: #fafbfc;
+}
+
+/* Alert Boxes */
+.alert {
+    padding: 14px 20px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.alert-success {
+    background-color: #ebfbee;
+    color: #2b8a3e;
+    border: 1px solid #d3f9d8;
+}
+
+.alert-danger {
+    background-color: #ffe3e3;
+    color: #c92a2a;
+    border: 1px solid #ffc9c9;
+}
+
+/* Footer */
+.footer-bar {
+    margin-top: auto;
+    border-top: 1px solid var(--color-hairline);
+    background-color: var(--color-canvas);
+    padding: 24px 0;
+    font-size: 13px;
+    color: var(--color-muted);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card {
+        padding: 20px;
+        border-radius: var(--radius-lg);
+    }
+    .top-nav {
+        height: auto;
+        padding: 12px 0;
+    }
+    .top-nav .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .nav-links {
+        flex-wrap: wrap;
+    }
+    .metric-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
