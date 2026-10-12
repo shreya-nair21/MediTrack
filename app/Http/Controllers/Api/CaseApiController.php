@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCaseRequest;
+use App\Http\Requests\UpdateCaseRequest;
 use App\Models\MedicalCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class CaseApiController extends Controller
 {
@@ -49,42 +49,10 @@ class CaseApiController extends Controller
      * Create a new medical case.
      * Allowed: Admin, Engineer.
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreCaseRequest $request): JsonResponse
     {
         $user = $request->user();
-        if (! Gate::forUser($user)->allows('create', MedicalCase::class)) {
-            return response()->json([
-                'success' => false,
-                'data' => null,
-                'message' => 'Unauthorized: Only Admins (and Engineers) can create cases.',
-            ], 403);
-        }
-
-        $validator = Validator::make($request->all(), [
-            'case_number' => ['required', 'string', 'max:50', 'unique:cases,case_number'],
-            'patient_reference' => ['required', 'string', 'max:100'],
-            'surgeon_name' => ['required', 'string', 'max:150'],
-            'implant_type' => ['required', 'string', 'max:200'],
-            'status' => ['required', 'string', Rule::in(MedicalCase::STATUSES)],
-            'priority' => ['required', 'string', Rule::in(MedicalCase::PRIORITIES)],
-            'surgery_date' => ['nullable', 'date'],
-        ], [
-            'case_number.unique' => 'The Case Number must be unique.',
-            'status.in' => 'Status must be one of: '.implode(', ', MedicalCase::STATUSES),
-            'priority.in' => 'Priority must be one of: '.implode(', ', MedicalCase::PRIORITIES),
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'data' => [
-                    'errors' => $validator->errors(),
-                ],
-                'message' => 'Validation error.',
-            ], 422);
-        }
-
-        $data = $validator->validated();
+        $data = $request->validated();
         $data['created_by'] = $user->id;
 
         $case = MedicalCase::create($data);
@@ -133,7 +101,7 @@ class CaseApiController extends Controller
      * Update an existing medical case.
      * Allowed: Admin, Engineer.
      */
-    public function update(Request $request, int|string $id): JsonResponse
+    public function update(UpdateCaseRequest $request, int|string $id): JsonResponse
     {
         $case = MedicalCase::find($id);
 
@@ -145,45 +113,7 @@ class CaseApiController extends Controller
             ], 404);
         }
 
-        $user = $request->user();
-        if (! Gate::forUser($user)->allows('update', $case)) {
-            return response()->json([
-                'success' => false,
-                'data' => null,
-                'message' => 'Unauthorized: Only Admins (and Engineers) can update cases.',
-            ], 403);
-        }
-
-        $validator = Validator::make($request->all(), [
-            'case_number' => [
-                'required',
-                'string',
-                'max:50',
-                Rule::unique('cases', 'case_number')->ignore($case->id),
-            ],
-            'patient_reference' => ['required', 'string', 'max:100'],
-            'surgeon_name' => ['required', 'string', 'max:150'],
-            'implant_type' => ['required', 'string', 'max:200'],
-            'status' => ['required', 'string', Rule::in(MedicalCase::STATUSES)],
-            'priority' => ['required', 'string', Rule::in(MedicalCase::PRIORITIES)],
-            'surgery_date' => ['nullable', 'date'],
-        ], [
-            'case_number.unique' => 'The Case Number must be unique.',
-            'status.in' => 'Status must be one of: '.implode(', ', MedicalCase::STATUSES),
-            'priority.in' => 'Priority must be one of: '.implode(', ', MedicalCase::PRIORITIES),
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'data' => [
-                    'errors' => $validator->errors(),
-                ],
-                'message' => 'Validation error.',
-            ], 422);
-        }
-
-        $case->update($validator->validated());
+        $case->update($request->validated());
         $case->load('creator:id,name,email,role');
 
         return response()->json([

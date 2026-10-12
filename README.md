@@ -46,8 +46,8 @@ The database seeder automatically provisions test credentials for all user roles
 ### Step-by-Step Installation
 ```bash
 # 1. Clone repository
-git clone https://github.com/your-username/meditrack.git
-cd meditrack
+git clone https://github.com/shreya-nair21/MediTrack.git
+cd MediTrack
 
 # 2. Install PHP dependencies
 composer install

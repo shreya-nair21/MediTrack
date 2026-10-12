@@ -12,13 +12,17 @@ class AuthController extends Controller
     /**
      * Show the login form.
      */
-    public function showLogin(): View|RedirectResponse
+    public function showLogin(Request $request): View|RedirectResponse
     {
         if (Auth::check()) {
             return redirect()->route('dashboard');
         }
 
-        return view('auth.login');
+        if ($request->query('view') === 'blade') {
+            return view('auth.login');
+        }
+
+        return view('react');
     }
 
     /**
